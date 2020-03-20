@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Wish List</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container p-3 shadow">
+    <div class="row my-3">
+      <div class="col">
+        <h1>Hello {{ user.first_name }}!</h1>
+      </div>
+      <div class="col-sm-1"><a href="/logout">Logout</a></div>
+      <div class="col-sm-2">
+        <button class="btn btn-primary mx=3" onclick="window.location.href='/wishes/stats';">View Stats</a>
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-primary" onclick="window.location.href='/wishes/new';">Make a wish!</a>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col">
+        Your wish list:
+        
+        <table class="table table-bordered table-hover shadow p-5">
+          <thead>
+            <th>Item</th>
+            <th>Date added</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            {% for wish in user_wishes %}
+              <tr>
+                <td>{{ wish.item }}</td>
+                <td>{{ wish.created_at|date:"F d, Y" }}</td>
+                <td>
+                  <a href="/wishes/remove/{{ wish.id }}">Remove</a> | 
+                  <a href="/wishes/edit/{{ wish.id }}">Edit</a> | 
+                  <a href="/wishes/grant/{{ wish.id }}">Granted!</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        Granted wishes:
+        <table class="table table-bordered table-hover shadow p-5">
+          <thead>
+            <th>Item</th>
+            <th>Wisher</th>
+            <th>Date Added</th>
+            <th>Date Granted</th>
+            <th>Likes</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            {% for granted in granted_wishes %}
+              <tr>
+                <td>{{ granted.item }}</td>
+                <td>{{ granted.user.first_name }}</td>
+                <td>{{ granted.created_at|date:"F d, Y" }}</td>
+                <td>{{ granted.granted_date|date:"F d, Y" }}</td>
+                <td>{{ granted.likes.all|length }}</td>
+                <td>
+                  {% if granted.user_id != user.id %}
+                    <a href="/wishes/like/{{ granted.id }}">Like</a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

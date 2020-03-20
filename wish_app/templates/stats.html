@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wish Stats</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container p-3 shadow">
+    <div class="row my-3">
+      <div class="col">
+        <h1>Hello {{ user.first_name }}! These are your stats!</h1>
+      </div>
+      <div class="col-sm-1 mx-3"><a href="/wishes/">Dashboard</a></div>
+      <div class="col-sm-2"><a href="/logout">Logout</a></div>
+    </div>
+    <div class="row my-3">
+      <div class="col">
+        Total wishes granted so far for all users: {{ total_granted_wishes }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Your granted wishes: {{ your_granted_wishes }}</p>
+        <p>Your pending wishes: {{ your_pending_wishes }}</p>
+      </div>
+    </div>
+  
+</body>
+</html>
