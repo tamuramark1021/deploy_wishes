@@ -81,8 +81,6 @@ def create(request):
         is_granted = False,
     )
 
-    wish.likes.add(this_user)
-
     print("Wish created successfully - item:", wish.item)
     # return to the list of wishes if we are successful
     return redirect('/wishes/')
